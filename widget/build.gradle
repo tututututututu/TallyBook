@@ -1,0 +1,82 @@
+apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+
+    compile 'com.github.Cutta:GifView:1.1'
+    compile 'com.makeramen:roundedimageview:2.3.0'//圆角
+    compile 'com.jude:rollviewpager:1.4.6'
+    compile 'com.commit451:PhotoView:1.2.4'
+    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
+    compile 'com.github.bumptech.glide:glide:3.8.0-SNAPSHOT'
+    //主页底部导航栏
+    compile 'com.ashokvarma.android:bottom-navigation-bar:1.3.0'
+
+    //http://www.recyclerview.org/
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.9'
+
+    compile 'com.contrarywind:Android-PickerView:3.2.4'
+
+    compile 'com.github.johnkil.print:print:1.2.2'
+
+    compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
+
+    //底部弹出菜单
+    //compile 'com.github.Kennyc1012:BottomSheet:2.3.1'
+    compile 'me.shaohui:bottomdialog:1.1.9'
+
+    compile 'com.jakewharton:butterknife:8.5.1'
+    //输入框
+    compile 'com.mylhyl:circleDialog:2.1.6'
+    //轮播图
+   // compile 'com.xhb:xbanner:1.2.7'
+    compile 'com.youth.banner:banner:1.4.9'
+    //上传图片
+    compile 'com.github.yaozs:ImageShowPicker:1.0.0'
+    compile 'com.zhihu.android:matisse:0.4.3'
+    //动图的imageview
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    //popwindow
+    compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.0.0'
+    compile 'com.github.chaychan:PowerfulViewLibrary:1.2.1'
+}

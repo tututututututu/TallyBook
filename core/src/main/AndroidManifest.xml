@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hzecool.core">
+
+    <application>
+        <activity
+            android:name=".activity.webview.JsBridgeWebViewActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.imagepager.ImagePagerActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".crash.DefaultErrorActivity"
+            android:screenOrientation="portrait"></activity>
+
+    </application>
+</manifest>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="花花花花花花花花花"
+            android:textSize="16sp"
+            android:maxLines="2"
+            android:layout_width="65dp"
+            android:ellipsize="end"
+            android:layout_height="wrap_content"
+            android:textColor="#3d4245"
+            android:id="@+id/tv_pop_customer"/>
+
+        <TextView
+           android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_pop_customer"
+            android:layout_marginLeft="5dp"
+            android:text="1234567"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#999999"
+            android:id="@+id/tv_pop_phone"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="26dp"
+            android:layout_alignParentRight="true"
+            android:text="未上货"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
+
+    <View
+        android:background="@color/loading_background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+
+</LinearLayout>

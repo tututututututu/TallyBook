@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--所有界面背景色-->
+    <color name="base_bg">@color/base_white</color>
+
+    <!--主题色-->
+    <color name="base_theme">#FED953</color>
+
+    <!--白色-->
+    <color name="base_white">#FFFFFF</color>
+
+    <!--透明-->
+    <color name="base_transparent">#00000000</color>
+
+    <!--字体颜色1-->
+    <color name="base_font1">#343233</color>
+
+    <!--字体颜色2-->
+    <color name="base_font2">#969696</color>
+
+    <!--字体颜色3-->
+    <color name="base_font3">#FF961A</color>
+
+    <!--label背景色-->
+    <color name="base_label">#F5F5F5</color>
+
+    <!--分割线背景色-->
+    <color name="base_divider">@color/base_label</color>
+
+    <!--标题栏色-->
+    <color name="base_title_bg">@color/base_theme</color>
+
+    <!--状态栏颜色-->
+    <color name="base_statusbar_bg">@color/base_theme</color>
+
+    <!--按钮可用色-->
+    <color name="base_btn_enable">#FFDA44</color>
+
+    <!--按钮不可用色-->
+    <color name="base_btn_enable_false">#F0F1F2</color>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="common_getcodewait">%1$s 秒后可重新发送</string>
+    <string name="common_wechat_share_tips">微信好友 (发送界面长按，粘贴款号信息)</string>
+    <string name="common_wechat_share_moment">朋友圈</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_select_share_type">选择分享方式</string>
+    <string name="common_no_photos">没有照片</string>
+    <string name="common_file_not_find">文件不存在</string>
+    <string name="common_upload_success">上传成功</string>
+    <string name="common_slb_links">商陆宝链接:</string>
+</resources>
