@@ -1,29 +1,31 @@
 package com.tutu.tallybook.tally;
 
-import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hzecool.core.base.TBaseFragment;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hzecool.core.base.TBaseActivity;
 import com.tutu.tallybook.R;
+
+import butterknife.BindView;
 
 /**
  * Created by tu on 2017/12/17.
  */
 
-public class TallyFragment extends TBaseFragment<ITallyView, TallyPresenter>
+public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
         implements ITallyView {
 
-    private static final String ARG_C = "content";
-
-    public static TallyFragment newInstance(String content) {
-        Bundle args = new Bundle();
-        args.putString(ARG_C, content);
-        TallyFragment fragment = new TallyFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.ll_top)
+    LinearLayout llTop;
+    @BindView(R.id.rv)
+    RecyclerView rv;
 
     @Override
     public void onLoadData(Object o) {
@@ -47,12 +49,14 @@ public class TallyFragment extends TBaseFragment<ITallyView, TallyPresenter>
 
     @Override
     public int getLayoutID() {
-        return R.layout.tally_fragment;
+        return R.layout.tally_activity;
     }
 
     @Override
     public void initView() {
-
+        rv.setLayoutManager(new GridLayoutManager(this, 4));
+        BaseQuickAdapter adapter = new TypeAdapter(mPresenter.getData());
+        rv.setAdapter(adapter);
     }
 
     @Override

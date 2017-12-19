@@ -10,7 +10,7 @@ import com.tutu.tallybook.chart.ChartFragment;
 import com.tutu.tallybook.detail.DetailFragment;
 import com.tutu.tallybook.discover.DiscoverFragment;
 import com.tutu.tallybook.my.MyFragment;
-import com.tutu.tallybook.tally.TallyFragment;
+import com.tutu.tallybook.empty.EmptyFragment;
 
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -30,7 +30,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return ChartFragment.newInstance(position + "");
             case 2:
-                return TallyFragment.newInstance(position + "");
+                return EmptyFragment.newInstance(position + "");
             case 3:
                 return DiscoverFragment.newInstance(position + "");
             case 4:

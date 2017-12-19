@@ -57,7 +57,8 @@ public class DiscoverFragment extends TBaseFragment<IDiscoverView, DiscoverPrese
 
     @Override
     public void initTitle(ImageView ivBack, TextView tvBack, View llBack, TextView titleName, TextView tvMenu, View titleRoot) {
-
+        llBack.setVisibility(View.GONE);
+        titleName.setText("发现");
     }
 
     @Override

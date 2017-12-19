@@ -1,23 +1,29 @@
 package com.tutu.tallybook.main;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hzecool.common.utils.HandlerUtil;
 import com.hzecool.common.utils.ResourceUtils;
 import com.hzecool.core.base.TBaseActivity;
 import com.tutu.tallybook.R;
 import com.tutu.tallybook.main.adapter.MainViewPagerAdapter;
 import com.tutu.tallybook.main.widget.SpecialTab;
 import com.tutu.tallybook.main.widget.SpecialTabRound;
+import com.tutu.tallybook.tally.TallyActivity;
 
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
+import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 public class MainActivity extends TBaseActivity<IMainView, MainPresenter>
         implements IMainView {
+
+    private ViewPager viewPager;
 
     @Override
     public int getLayoutID() {
@@ -36,11 +42,26 @@ public class MainActivity extends TBaseActivity<IMainView, MainPresenter>
                 .addItem(newItem(R.mipmap.bottom_me_normal, R.mipmap.bottom_me_pressed, "我的"))
                 .build();
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), navigationController.getItemCount()));
 
         //自动适配ViewPager页面切换
         navigationController.setupWithViewPager(viewPager);
+        navigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
+            @Override
+            public void onSelected(int index, int old) {
+                if (index == 2) {
+                    Intent intent = new Intent(MainActivity.this, TallyActivity.class);
+                    startActivity(intent);
+                    HandlerUtil.postDelay(() -> viewPager.setCurrentItem(old), 1000);
+                }
+            }
+
+            @Override
+            public void onRepeat(int index) {
+
+            }
+        });
     }
 
     @Override
