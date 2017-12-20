@@ -209,7 +209,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/zhipengyou1" />
+                android:src="@mipmap/s12" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -228,7 +228,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/zhiweixiu1" />
+                android:src="@mipmap/s33" />
 
             <TextView
                 android:layout_width="wrap_content"

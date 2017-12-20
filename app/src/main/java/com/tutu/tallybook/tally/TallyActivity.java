@@ -27,6 +27,9 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
     @BindView(R.id.rv)
     RecyclerView rv;
 
+
+    private boolean inCome = false;
+
     @Override
     public void onLoadData(Object o) {
 
@@ -55,7 +58,7 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
     @Override
     public void initView() {
         rv.setLayoutManager(new GridLayoutManager(this, 4));
-        BaseQuickAdapter adapter = new TypeAdapter(mPresenter.getData());
+        BaseQuickAdapter adapter = new TypeAdapter(mPresenter.getData(inCome));
         rv.setAdapter(adapter);
     }
 

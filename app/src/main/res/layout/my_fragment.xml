@@ -32,7 +32,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
@@ -44,10 +44,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_daka_count"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="2" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="2" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -85,10 +86,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_bi_count"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="2" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,10 +100,24 @@
             </LinearLayout>
 
         </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_daka"
+            android:layout_width="60dp"
+            android:layout_height="26dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_bg_rectangle_red"
+            android:gravity="center"
+            android:text="未打卡"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
 
     <RelativeLayout
+        android:id="@+id/rl_huizhang"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -112,8 +128,9 @@
             android:id="@+id/iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/me_badge" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -142,6 +159,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_qinglihuancun"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -152,8 +170,9 @@
             android:id="@+id/iv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/me_help" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -174,6 +193,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_fenxiang"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="0.5dp"
@@ -184,8 +204,9 @@
             android:id="@+id/iv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/me_recommend" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -194,6 +215,40 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv3"
             android:text="分享" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/ic_right_arrow" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_fankui"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/me_feedback" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv4"
+            android:text="反馈" />
 
         <ImageView
             android:layout_width="wrap_content"

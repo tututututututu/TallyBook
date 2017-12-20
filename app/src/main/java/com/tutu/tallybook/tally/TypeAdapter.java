@@ -18,6 +18,7 @@ public class TypeAdapter extends BaseQuickAdapter<BillTypeBean,BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, BillTypeBean item) {
-
+        helper.setText(R.id.tv,item.getName());
+        helper.setImageResource(R.id.iv,item.getResId());
     }
 }
