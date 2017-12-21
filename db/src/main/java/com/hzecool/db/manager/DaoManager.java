@@ -53,12 +53,5 @@ public class DaoManager {
     }
 
     public static void ClearDB(){
-        getDaoInstant().getBillingDaoScDictColorBeanDao().deleteAll();
-        getDaoInstant().getDressDaoDressStyleInfoBeanDao().deleteAll();
-        getDaoInstant().getDraftSaleBillingDaoBeanDao().deleteAll();
-        getDaoInstant().getBillingDaoScDictSizeBeanDao().deleteAll();
-        getDaoInstant().getBillingDaoScDwxxBeanDao().deleteAll();
-        getDaoInstant().getMarkerDaoBeanDao().deleteAll();
-        getDaoInstant().getBillingDaoDressStyleBeanDao().deleteAll();
     }
 }

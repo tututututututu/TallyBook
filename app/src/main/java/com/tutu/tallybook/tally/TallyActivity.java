@@ -29,6 +29,7 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
 
 
     private boolean inCome = false;
+    private BaseQuickAdapter adapter;
 
     @Override
     public void onLoadData(Object o) {
@@ -58,8 +59,12 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
     @Override
     public void initView() {
         rv.setLayoutManager(new GridLayoutManager(this, 4));
-        BaseQuickAdapter adapter = new TypeAdapter(mPresenter.getData(inCome));
+        adapter = new TypeAdapter(mPresenter.getData(inCome));
         rv.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+
+        });
     }
 
     @Override
@@ -71,4 +76,7 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
     protected TallyPresenter createPresenter() {
         return new TallyPresenter();
     }
+
+
+
 }

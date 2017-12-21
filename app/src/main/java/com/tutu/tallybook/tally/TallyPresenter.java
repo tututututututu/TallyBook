@@ -1,8 +1,10 @@
 package com.tutu.tallybook.tally;
 
 import com.hzecool.core.base.TBasePresenter;
+import com.hzecool.db.bean.TallyRecode;
 import com.tutu.tallybook.bean.BillTypeBean;
 import com.tutu.tallybook.data.Constans;
+import com.tutu.tallybook.data.DataProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,6 @@ import java.util.List;
 public class TallyPresenter extends TBasePresenter<ITallyView> {
     @Override
     protected void start() {
-
     }
 
     public List getData(boolean inCome) {
@@ -36,5 +37,9 @@ public class TallyPresenter extends TBasePresenter<ITallyView> {
         }
 
         return data;
+    }
+
+    public void add(TallyRecode tallyRecode){
+        DataProvider.add(tallyRecode);
     }
 }
