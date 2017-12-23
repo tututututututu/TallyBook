@@ -62,6 +62,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * https://github.com/afollestad/material-dialogs
  * @author Aidan Follestad (afollestad)
  */
 public class MaterialDialog extends DialogBase implements

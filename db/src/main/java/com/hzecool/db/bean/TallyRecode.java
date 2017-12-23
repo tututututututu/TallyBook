@@ -2,7 +2,7 @@ package com.hzecool.db.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Unique;
+import org.greenrobot.greendao.annotation.Id;
 
 import java.util.Date;
 
@@ -12,17 +12,17 @@ import java.util.Date;
 
 @Entity
 public class TallyRecode {
-    @Unique
-    private String id;
+    @Id(autoincrement = true)
+    private Long id;
     private boolean isInCome;
     /**
      * 类型id  根据id可以获取name resId
      */
-    private String typeId;
+    private int typeId;
     private double money;
     private Date date;
-    @Generated(hash = 2133859813)
-    public TallyRecode(String id, boolean isInCome, String typeId, double money,
+    @Generated(hash = 1774712256)
+    public TallyRecode(Long id, boolean isInCome, int typeId, double money,
             Date date) {
         this.id = id;
         this.isInCome = isInCome;
@@ -33,10 +33,10 @@ public class TallyRecode {
     @Generated(hash = 957767067)
     public TallyRecode() {
     }
-    public String getId() {
+    public Long getId() {
         return this.id;
     }
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public boolean getIsInCome() {
@@ -45,10 +45,10 @@ public class TallyRecode {
     public void setIsInCome(boolean isInCome) {
         this.isInCome = isInCome;
     }
-    public String getTypeId() {
+    public int getTypeId() {
         return this.typeId;
     }
-    public void setTypeId(String typeId) {
+    public void setTypeId(int typeId) {
         this.typeId = typeId;
     }
     public double getMoney() {
@@ -62,5 +62,16 @@ public class TallyRecode {
     }
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "TallyRecode{" +
+                "id=" + id +
+                ", isInCome=" + isInCome +
+                ", typeId=" + typeId +
+                ", money=" + money +
+                ", date=" + date +
+                '}';
     }
 }

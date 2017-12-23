@@ -2,7 +2,6 @@ package com.hzecool.common.utils;
 
 import android.annotation.SuppressLint;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -304,6 +303,17 @@ public class TimeUtils {
      */
     public static String getYYMMDDString(Date date) {
         return date2String(date, YYMMDD_PATTERN);
+    }
+
+    /**
+     * 将Date类型转为时间字符串
+     * <p>格式为yyyy-MM-dd w</p>
+     *
+     * @param date Date类型时间
+     * @return 时间字符串
+     */
+    public static String getYYMMDDWString(Date date) {
+        return date2String(date, "MM-dd EE");
     }
 
     /**

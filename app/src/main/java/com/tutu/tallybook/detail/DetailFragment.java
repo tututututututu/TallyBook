@@ -1,14 +1,23 @@
 package com.tutu.tallybook.detail;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hzecool.common.utils.ResourceUtils;
 import com.hzecool.common.utils.SizeUtils;
 import com.hzecool.core.base.TBaseFragment;
+import com.hzecool.db.bean.TallyRecode;
 import com.tutu.tallybook.R;
+
+import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * Created by tu on 2017/12/17.
@@ -18,6 +27,33 @@ public class DetailFragment extends TBaseFragment<IDetailView, DetailPresenter>
         implements IDetailView {
 
     private static final String ARG_C = "content";
+    @BindView(R.id.tv_titel)
+    TextView tvTitel;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
+    @BindView(R.id.tv_back)
+    TextView tvBack;
+    @BindView(R.id.ll_back)
+    LinearLayout llBack;
+    @BindView(R.id.tv_menu)
+    TextView tvMenu;
+    @BindView(R.id.title_root)
+    RelativeLayout titleRoot;
+    @BindView(R.id.tv_year)
+    TextView tvYear;
+    @BindView(R.id.tv_month)
+    TextView tvMonth;
+    @BindView(R.id.ll_time)
+    LinearLayout llTime;
+    @BindView(R.id.divider)
+    View divider;
+    @BindView(R.id.tv_income)
+    TextView tvIncome;
+    @BindView(R.id.tv_expend)
+    TextView tvExpend;
+    @BindView(R.id.rv)
+    RecyclerView rv;
+    private DetailAdapter adapter;
 
     public static DetailFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -29,7 +65,25 @@ public class DetailFragment extends TBaseFragment<IDetailView, DetailPresenter>
 
     @Override
     public void onLoadData(Object o) {
+        adapter.setNewData((List<TallyRecode>) o);
 
+        computOther((List<TallyRecode>) o);
+    }
+
+    private void computOther(List<TallyRecode> data) {
+        double inCome = 0;
+        double outPut = 0;
+
+        for (TallyRecode datum : data) {
+            if (datum.getIsInCome()){
+                inCome+=datum.getMoney();
+            }else {
+                outPut+=datum.getMoney();
+            }
+        }
+
+        tvIncome.setText(inCome+"");
+        tvExpend.setText(outPut+"");
     }
 
     @Override
@@ -54,7 +108,9 @@ public class DetailFragment extends TBaseFragment<IDetailView, DetailPresenter>
 
     @Override
     public void initView() {
-
+        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new DetailAdapter(null);
+        rv.setAdapter(adapter);
     }
 
     @Override

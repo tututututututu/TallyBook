@@ -1,5 +1,6 @@
 package com.tutu.tallybook.data;
 
+import com.hzecool.core.log.L;
 import com.hzecool.core.rxbus.RxBus;
 import com.hzecool.db.bean.TallyRecode;
 import com.hzecool.db.bean.TallyRecodeDao;
@@ -18,32 +19,31 @@ public class DataProvider {
         DaoManager.getDaoInstant().getTallyRecodeDao()
                 .insertOrReplaceInTx(tallyRecode);
 
-        RxBus.postEvent(new DataBaseChangeEvent(1),DataBaseChangeEvent.class);
+        RxBus.postEvent(new DataBaseChangeEvent(1), DataBaseChangeEvent.class);
     }
 
     public static void delete(TallyRecode tallyRecode) {
         DaoManager.getDaoInstant().getTallyRecodeDao()
                 .delete(tallyRecode);
-        RxBus.postEvent(new DataBaseChangeEvent(2),DataBaseChangeEvent.class);
     }
 
-    public static void update(TallyRecode tallyRecode){
+    public static void update(TallyRecode tallyRecode) {
         DaoManager.getDaoInstant().getTallyRecodeDao()
                 .update(tallyRecode);
-        RxBus.postEvent(new DataBaseChangeEvent(3),DataBaseChangeEvent.class);
     }
 
-    public static List<TallyRecode> queryAll(){
-        RxBus.postEvent(new DataBaseChangeEvent(4),DataBaseChangeEvent.class);
-       return DaoManager.getDaoInstant().getTallyRecodeDao()
+    public static List<TallyRecode> queryAll() {
+        List<TallyRecode> data = DaoManager.getDaoInstant().getTallyRecodeDao()
                 .queryBuilder()
                 .orderDesc(TallyRecodeDao.Properties.Date)
                 .list();
+
+        L.i(data.toString());
+        return data;
     }
 
 
-    public static List<TallyRecode> queryByDate(Date start,Date end){
-        RxBus.postEvent(new DataBaseChangeEvent(4),DataBaseChangeEvent.class);
+    public static List<TallyRecode> queryByDate(Date start, Date end) {
         return DaoManager.getDaoInstant().getTallyRecodeDao()
                 .queryBuilder()
                 .where(TallyRecodeDao.Properties.Date.gt(start))

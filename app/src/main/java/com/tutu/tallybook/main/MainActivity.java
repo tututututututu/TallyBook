@@ -32,7 +32,7 @@ public class MainActivity extends TBaseActivity<IMainView, MainPresenter>
 
     @Override
     public void initView() {
-        PageNavigationView tab = (PageNavigationView) findViewById(R.id.tab);
+        PageNavigationView tab = findViewById(R.id.tab);
 
         NavigationController navigationController = tab.custom()
                 .addItem(newItem(R.mipmap.bottom_detail_normal, R.mipmap.bottom_detail_pressed, "明细"))
@@ -43,6 +43,7 @@ public class MainActivity extends TBaseActivity<IMainView, MainPresenter>
                 .build();
 
         viewPager = findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), navigationController.getItemCount()));
 
         //自动适配ViewPager页面切换

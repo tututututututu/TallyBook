@@ -2,14 +2,21 @@ package com.tutu.tallybook.tally;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hzecool.common.utils.ToastUtils;
 import com.hzecool.core.base.TBaseActivity;
+import com.hzecool.db.bean.TallyRecode;
+import com.hzecool.widget.materialdialog.MaterialDialog;
 import com.tutu.tallybook.R;
+import com.tutu.tallybook.bean.BillTypeBean;
+
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -26,7 +33,8 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
     LinearLayout llTop;
     @BindView(R.id.rv)
     RecyclerView rv;
-
+    @BindView(R.id.tv_cancel)
+    TextView tvCancel;
 
     private boolean inCome = false;
     private BaseQuickAdapter adapter;
@@ -58,11 +66,32 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
 
     @Override
     public void initView() {
+        tvCancel.setOnClickListener(v -> finish());
         rv.setLayoutManager(new GridLayoutManager(this, 4));
         adapter = new TypeAdapter(mPresenter.getData(inCome));
         rv.setAdapter(adapter);
 
         adapter.setOnItemClickListener((adapter, view, position) -> {
+            BillTypeBean billTypeBean = (BillTypeBean) adapter.getData().get(position);
+
+            new MaterialDialog.Builder(this)
+                    .title("请输入金额")
+                    //.content(R.string.input_content)
+                    .inputType(InputType.TYPE_CLASS_NUMBER)
+                    .input(billTypeBean.getName(), "", (dialog, input) -> {
+                        try {
+                            TallyRecode tallyRecode = new TallyRecode();
+                            tallyRecode.setDate(new Date());
+                            tallyRecode.setIsInCome(inCome);
+                            tallyRecode.setMoney(Double.valueOf(input.toString()));
+                            tallyRecode.setTypeId(billTypeBean.getId());
+                            mPresenter.add(tallyRecode);
+                        } catch (Exception e) {
+                            ToastUtils.showShortToast("请输入正确的金额");
+                        }
+
+                    }).show();
+
 
         });
     }
@@ -76,7 +105,6 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
     protected TallyPresenter createPresenter() {
         return new TallyPresenter();
     }
-
 
 
 }

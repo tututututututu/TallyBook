@@ -39,4 +39,10 @@
 
     <!--按钮不可用色-->
     <color name="base_btn_enable_false">#F0F1F2</color>
+
+    <!--收入-->
+    <color name="base_in_come">#cf2921</color>
+
+    <!--支出-->
+    <color name="base_out_put">#059708</color>
 </resources>
