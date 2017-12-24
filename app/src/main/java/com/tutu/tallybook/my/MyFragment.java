@@ -18,6 +18,7 @@ import com.tutu.tallybook.huizhang.HuiZhangActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by tu on 2017/12/17.
@@ -53,6 +54,9 @@ public class MyFragment extends TBaseFragment<IMyView, MyPresenter>
     RelativeLayout rlFankui;
     @BindView(R.id.tv_daka)
     TextView tvDaka;
+    @BindView(R.id.tv_date_count)
+    TextView tvDateCount;
+    Unbinder unbinder;
 
 
     public static MyFragment newInstance(String content) {
@@ -132,4 +136,15 @@ public class MyFragment extends TBaseFragment<IMyView, MyPresenter>
                 break;
         }
     }
+
+    @Override
+    public void setCount(long count) {
+        tvBiCount.setText(count + "");
+    }
+
+    @Override
+    public void setDayCount(long count) {
+        tvDateCount.setText(count + "");
+    }
+
 }

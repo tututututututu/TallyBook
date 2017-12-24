@@ -9,8 +9,6 @@ import android.webkit.WebChromeClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
@@ -22,18 +20,12 @@ import com.hzecool.core.base.TBaseActivity;
 
 import butterknife.BindView;
 
-
-@Route(path = "/core/JsBridgeWebViewActivity")
 public class JsBridgeWebViewActivity extends TBaseActivity<JsBridgeWebViewActivity, WebViewPresenter> {
 
     @BindView(R2.id.webview)
     BridgeWebView webview;
 
-
-    @Autowired
     String url;
-
-    @Autowired
     String title;
 
     @Override
@@ -43,6 +35,9 @@ public class JsBridgeWebViewActivity extends TBaseActivity<JsBridgeWebViewActivi
 
     @Override
     public void initView() {
+
+        url = getIntent().getStringExtra("url");
+        title = getIntent().getStringExtra("title");
 
         initWebView();
 

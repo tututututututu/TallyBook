@@ -198,25 +198,28 @@ public class TimeUtils {
     /**
      * 获取系统 月份
      * 当前月份的计算： 0 -11 代表 一年中的12个月
+     *
      * @return 月份
      */
-    public static int getCalendarMonth(){
+    public static int getCalendarMonth() {
         return Calendar.getInstance().get(Calendar.MONTH);
     }
 
     /**
      * 获取系统 日期
+     *
      * @return 日期
      */
-    public static int getCalendarDate(){
+    public static int getCalendarDate() {
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
 
     /**
      * 获取系统 年份
+     *
      * @return 年份
      */
-    public static int getCalendarYear(){
+    public static int getCalendarYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
@@ -1205,10 +1208,9 @@ public class TimeUtils {
     }
 
     /**
-     *
      * @return 获取当前日期
      */
-    public  static String getToday() {
+    public static String getToday() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
@@ -1220,7 +1222,7 @@ public class TimeUtils {
      *
      * @return
      */
-    public static  String getyestoday() {
+    public static String getyestoday() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         return new SimpleDateFormat("yyyy-MM-dd ").format(cal.getTime());
@@ -1267,5 +1269,102 @@ public class TimeUtils {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String result = format.format(today).trim();
         return result;
+    }
+
+    /**
+     * 获得该月第一天
+     *
+     * @param year
+     * @param month
+     * @return
+     */
+    public static Date getFirstDayOfMonth(int year, int month) {
+        Calendar cal = Calendar.getInstance();
+        //设置年份
+        cal.set(Calendar.YEAR, year);
+        //设置月份
+        cal.set(Calendar.MONTH, month - 1);
+        //获取某月最小天数
+        int firstDay = cal.getActualMinimum(Calendar.DAY_OF_MONTH);
+        //设置日历中月份的最小天数
+        cal.set(Calendar.DAY_OF_MONTH, firstDay);
+        //格式化日期
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return cal.getTime();
+//        String firstDayOfMonth = sdf.format(cal.getTime());
+//        return firstDayOfMonth;
+    }
+
+    /**
+     * 获得该月最后一天
+     *
+     * @param year
+     * @param month
+     * @return
+     */
+    public static Date getLastDayOfMonth(int year, int month) {
+        Calendar cal = Calendar.getInstance();
+        //设置年份
+        cal.set(Calendar.YEAR, year);
+        //设置月份
+        cal.set(Calendar.MONTH, month - 1);
+        //获取某月最大天数
+        int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        //设置日历中月份的最大天数
+        cal.set(Calendar.DAY_OF_MONTH, lastDay);
+        return cal.getTime();
+
+        //格式化日期
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        String lastDayOfMonth = sdf.format(cal.getTime());
+//        return lastDayOfMonth;
+    }
+
+    /**
+     * 获取本周第一天
+     *
+     * @return
+     * @throws ParseException
+     */
+    public static Date getFirstDateOfWeek() {
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(new Date());
+
+        int d = 0;
+        if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
+            d = -6;
+        } else {
+            d = 2 - cal.get(Calendar.DAY_OF_WEEK);
+        }
+        cal.add(Calendar.DAY_OF_WEEK, d);
+
+        return cal.getTime();
+    }
+
+    /**
+     * 获取本周最后一天
+     *
+     * @return
+     * @throws ParseException
+     */
+    public static Date getLastDateOfWeek() {
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(new Date());
+
+        int d = 0;
+        if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
+            d = -6;
+        } else {
+            d = 2 - cal.get(Calendar.DAY_OF_WEEK);
+        }
+        cal.add(Calendar.DAY_OF_WEEK, d);
+        // 所在周开始日期
+        String data1 = new SimpleDateFormat("yyyy/MM/dd").format(cal.getTime());
+        cal.add(Calendar.DAY_OF_WEEK, 6);
+        // 所在周结束日期
+        String data2 = new SimpleDateFormat("yyyy/MM/dd").format(cal.getTime());
+        return cal.getTime();
     }
 }

@@ -7,4 +7,6 @@ import com.hzecool.core.base.TIBaseView;
  */
 
 public interface IMyView extends TIBaseView{
+    void setCount(long count);
+    void setDayCount(long count);
 }

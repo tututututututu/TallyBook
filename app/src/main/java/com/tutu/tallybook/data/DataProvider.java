@@ -25,6 +25,7 @@ public class DataProvider {
     public static void delete(TallyRecode tallyRecode) {
         DaoManager.getDaoInstant().getTallyRecodeDao()
                 .delete(tallyRecode);
+        RxBus.postEvent(new DataBaseChangeEvent(1), DataBaseChangeEvent.class);
     }
 
     public static void update(TallyRecode tallyRecode) {
@@ -52,5 +53,31 @@ public class DataProvider {
                 .list();
     }
 
+    public static List<TallyRecode> queryByDateIncomeOrderMoney(Date start, Date end,boolean isIncome) {
+        return DaoManager.getDaoInstant().getTallyRecodeDao()
+                .queryBuilder()
+                .where(TallyRecodeDao.Properties.Date.gt(start))
+                .where(TallyRecodeDao.Properties.Date.lt(end))
+                .where(TallyRecodeDao.Properties.IsInCome.eq(isIncome))
+                .orderDesc(TallyRecodeDao.Properties.Money)
+                .list();
+    }
 
+    public static List<TallyRecode> queryByDateIncome(Date start, Date end,boolean isIncome) {
+        return DaoManager.getDaoInstant().getTallyRecodeDao()
+                .queryBuilder()
+                .where(TallyRecodeDao.Properties.Date.gt(start))
+                .where(TallyRecodeDao.Properties.Date.lt(end))
+                .where(TallyRecodeDao.Properties.IsInCome.eq(isIncome))
+                .orderDesc(TallyRecodeDao.Properties.Date)
+                .list();
+    }
+
+
+    public static long queryCount() {
+        return DaoManager.getDaoInstant().getTallyRecodeDao()
+                .queryBuilder()
+                .orderDesc(TallyRecodeDao.Properties.Date)
+                .count();
+    }
 }

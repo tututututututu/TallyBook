@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".tally.TallyActivity" />
-        <activity android:name=".huizhang.HuiZhangActivity"></activity>
+        <activity android:name=".huizhang.HuiZhangActivity" />
+        <activity android:name=".detail.item.ItemDetailActivity"></activity>
     </application>
 
 </manifest>

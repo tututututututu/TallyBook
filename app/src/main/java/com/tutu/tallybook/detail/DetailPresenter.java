@@ -1,5 +1,6 @@
 package com.tutu.tallybook.detail;
 
+import com.hzecool.common.utils.TimeUtils;
 import com.hzecool.core.base.TBasePresenter;
 import com.hzecool.core.rxbus.RxBus;
 import com.hzecool.db.bean.TallyRecode;
@@ -57,6 +58,14 @@ public class DetailPresenter extends TBasePresenter<IDetailView> {
 //                }
 //            }
 //        }
+
+        getView().onLoadData(data);
+    }
+
+    public void getDateData(int year, int month) {
+
+        List<TallyRecode> data = DataProvider.queryByDate(TimeUtils.getFirstDayOfMonth(year,month),
+                TimeUtils.getLastDayOfMonth(year,month));
 
         getView().onLoadData(data);
     }

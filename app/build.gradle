@@ -37,6 +37,7 @@ dependencies {
     compile 'me.majiajie:pager-bottom-tab-strip:2.2.5'
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
 
 configurations.all {

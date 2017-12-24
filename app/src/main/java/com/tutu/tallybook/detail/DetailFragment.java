@@ -1,5 +1,6 @@
 package com.tutu.tallybook.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,15 +10,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hzecool.common.utils.ResourceUtils;
 import com.hzecool.common.utils.SizeUtils;
 import com.hzecool.core.base.TBaseFragment;
 import com.hzecool.db.bean.TallyRecode;
 import com.tutu.tallybook.R;
+import com.tutu.tallybook.detail.item.ItemDetailActivity;
+import com.tutu.tallybook.view.YearMonthDatePickerDialog;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by tu on 2017/12/17.
@@ -54,6 +60,7 @@ public class DetailFragment extends TBaseFragment<IDetailView, DetailPresenter>
     @BindView(R.id.rv)
     RecyclerView rv;
     private DetailAdapter adapter;
+    private YearMonthDatePickerDialog yearMonthDatePickerDialog;
 
     public static DetailFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -75,15 +82,15 @@ public class DetailFragment extends TBaseFragment<IDetailView, DetailPresenter>
         double outPut = 0;
 
         for (TallyRecode datum : data) {
-            if (datum.getIsInCome()){
-                inCome+=datum.getMoney();
-            }else {
-                outPut+=datum.getMoney();
+            if (datum.getIsInCome()) {
+                inCome += datum.getMoney();
+            } else {
+                outPut += datum.getMoney();
             }
         }
 
-        tvIncome.setText(inCome+"");
-        tvExpend.setText(outPut+"");
+        tvIncome.setText(inCome + "");
+        tvExpend.setText(outPut + "");
     }
 
     @Override
@@ -111,6 +118,25 @@ public class DetailFragment extends TBaseFragment<IDetailView, DetailPresenter>
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new DetailAdapter(null);
         rv.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), ItemDetailActivity.class);
+                intent.putExtra("item",(TallyRecode)adapter.getData().get(position));
+                startActivity(intent);
+            }
+        });
+
+        yearMonthDatePickerDialog = new YearMonthDatePickerDialog(getActivity()
+                , (view1, year, month, dayOfMonth) -> {
+
+            tvYear.setText(year + "");
+            tvMonth.setText(month + 1 + "");
+            yearMonthDatePickerDialog.dismiss();
+            mPresenter.getDateData(year, month + 1);
+        }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH)
+                , Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
@@ -124,5 +150,14 @@ public class DetailFragment extends TBaseFragment<IDetailView, DetailPresenter>
     @Override
     protected DetailPresenter createPresenter() {
         return new DetailPresenter();
+    }
+
+    @OnClick({R.id.ll_time})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_time:
+                yearMonthDatePickerDialog.show();
+                break;
+        }
     }
 }

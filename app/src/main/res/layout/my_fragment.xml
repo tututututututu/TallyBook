@@ -65,6 +65,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_date_count"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -155,7 +156,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="4dp"
             android:layout_toLeftOf="@id/tv_arr"
-            android:text="已获得2枚" />
+            android:text="已获得0枚" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -232,7 +233,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="0.5dp"
         android:background="@color/white"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv4"

@@ -7,4 +7,7 @@ import com.hzecool.core.base.TIBaseView;
  */
 
 public interface IChartView extends TIBaseView{
+    int getTimeType();
+    boolean isIncome();
+    void onLoadChart(Object o);
 }

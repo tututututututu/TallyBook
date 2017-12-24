@@ -16,9 +16,12 @@ import com.hzecool.widget.materialdialog.MaterialDialog;
 import com.tutu.tallybook.R;
 import com.tutu.tallybook.bean.BillTypeBean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by tu on 2017/12/17.
@@ -86,13 +89,11 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
                             tallyRecode.setMoney(Double.valueOf(input.toString()));
                             tallyRecode.setTypeId(billTypeBean.getId());
                             mPresenter.add(tallyRecode);
+                            ToastUtils.showShortToast("新增成功");
                         } catch (Exception e) {
                             ToastUtils.showShortToast("请输入正确的金额");
                         }
-
                     }).show();
-
-
         });
     }
 
@@ -107,4 +108,38 @@ public class TallyActivity extends TBaseActivity<ITallyView, TallyPresenter>
     }
 
 
+    @OnClick({R.id.ll_top})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_top:
+                showTypeChoice();
+                break;
+        }
+    }
+
+    private void showTypeChoice() {
+        List<String> typeList = new ArrayList<>();
+        typeList.add("支出");
+        typeList.add("收入");
+        new MaterialDialog.Builder(this)
+                .title("选择类型")
+                .items(typeList)
+                .itemsCallbackSingleChoice(0, (dialog, view, which, text) -> {
+                    tvName.setText(typeList.get(which));
+                    changeAdapterData(which);
+                    return true;
+                })
+                .positiveText("确定")
+                .show();
+    }
+
+    private void changeAdapterData(int which) {
+        if (which == 0) {
+            inCome = false;
+            adapter.setNewData(mPresenter.getData(false));
+        } else {
+            inCome = true;
+            adapter.setNewData(mPresenter.getData(true));
+        }
+    }
 }
