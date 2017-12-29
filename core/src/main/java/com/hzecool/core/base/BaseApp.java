@@ -62,7 +62,7 @@ public class BaseApp extends Application {
         SPUtils.initSP("appData");
         iniFinalSP();
         //初始化OKgo
-        OkGo.init(this);
+        OkGo.getInstance().init(this);
 
         //初始化路由
         initArouter();

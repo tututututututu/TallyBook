@@ -16,6 +16,7 @@ import rx.subjects.Subject;
  * RxBus 通信
  * 注意！！！  使用订阅之后需要解除订阅关系，建议在订阅的时候将订阅者放入activiy和fragment的订阅者集合中
  * 已保证在销毁的时候不会泄露
+ * @author yksoft
  */
 
 public final class RxBus {

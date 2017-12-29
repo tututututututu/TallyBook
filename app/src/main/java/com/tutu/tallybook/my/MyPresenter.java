@@ -10,7 +10,9 @@ import com.tutu.tallybook.data.DataProvider;
 import java.util.List;
 
 /**
- * Created by tu on 2017/12/17.
+ *
+ * @author tu
+ * @date 2017/12/17
  */
 
 public class MyPresenter extends TBasePresenter<IMyView> {

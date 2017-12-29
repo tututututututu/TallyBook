@@ -1,10 +1,13 @@
 package com.tutu.tallybook.app;
 
+import com.hzecool.common.utils.SPUtils;
 import com.hzecool.core.base.BaseApp;
 import com.tutu.tallybook.data.Constans;
 
 /**
- * Created by tu on 2017/12/17.
+ *
+ * @author tu
+ * @date 2017/12/17
  */
 
 public class TallyBookApp extends BaseApp {
@@ -13,5 +16,6 @@ public class TallyBookApp extends BaseApp {
         super.onCreate();
 
         Constans.init();
+        SPUtils.initSP("appData");
     }
 }
