@@ -39,7 +39,7 @@ public class FlashActivity extends AppCompatActivity {
 
                         ShowTypeBean bean = GsonUtils.jsonToObj(response.body(), ShowTypeBean.class);
 
-                        if (bean.getIosversion().getVersion().equals(AppUtils.getAppVersionName()) && bean.getIosversion().getStruts().equals("1")) {
+                        if (bean.getIosversion().getVersion().equals(AppUtils.getAppVersionName()) && bean.getIosversion().getStruts().equals("0")) {
                             /**
                              * 显示网页
                              */

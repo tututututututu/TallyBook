@@ -21,15 +21,20 @@ import com.hzecool.common.utils.ToastUtils;
 import com.hzecool.common.utils.Utils;
 import com.hzecool.core.base.TBaseActivity;
 import com.hzecool.core.log.L;
+import com.hzecool.core.rxbus.RxBus;
 import com.hzecool.db.utils.utils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tutu.tallybook.R;
+import com.tutu.tallybook.bean.AuthResultBean;
 import com.tutu.tallybook.bean.AuthUploadBean;
+import com.tutu.tallybook.bean.FacePPComparaResultBean;
+import com.tutu.tallybook.bean.SFZAuthBean;
 import com.tutu.tallybook.web.Constants;
 import com.tutu.tallybook.web.GsonUtils;
+import com.tutu.tallybook.web.beana.JumpEvent;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -171,7 +176,7 @@ public class AuthenActivity extends TBaseActivity<IAuthenView, AuthenPresenter>
                 startCamara(SFFM);
                 break;
             case R.id.tv_save:
-                showLoadingDialog(false, false, "正在保存...");
+                showLoadingDialog(false, false, "正在认证,请等待1-3分钟");
                 getSFZZM();
                 break;
             default:
@@ -184,17 +189,20 @@ public class AuthenActivity extends TBaseActivity<IAuthenView, AuthenPresenter>
      */
     private void getSFZZM() {
         if (TextUtils.isEmpty(zmBase64)) {
-            ToastUtils.showShortToast("请选择正面照片");
+            ToastUtils.showLongToast("请选择正面照片");
+            cancelLoadingDialog();
             return;
         }
 
         if (TextUtils.isEmpty(fmBase64)) {
-            ToastUtils.showShortToast("请选择反面照片");
+            ToastUtils.showLongToast("请选择反面照片");
+            cancelLoadingDialog();
             return;
         }
 
         if (TextUtils.isEmpty(rlBase64)) {
-            ToastUtils.showShortToast("请选择手持照片");
+            ToastUtils.showLongToast("请选择手持照片");
+            cancelLoadingDialog();
             return;
         }
 
@@ -213,6 +221,16 @@ public class AuthenActivity extends TBaseActivity<IAuthenView, AuthenPresenter>
                     public void onSuccess(Response<String> response) {
 
                         L.e("身份证正面信息:" + response.body().toString());
+
+
+                        SFZAuthBean sfzAuthBean = GsonUtils.jsonToObj(response.body().toString(), SFZAuthBean.class);
+
+                        if (sfzAuthBean.getCards() == null || sfzAuthBean.getCards().size() == 0) {
+                            ToastUtils.showLongToast("请重新上传正面身份证");
+                            cancelLoadingDialog();
+                            return;
+                        }
+
                         zmResult = response.body().toString();
                         getSFZFM();
                     }
@@ -237,7 +255,6 @@ public class AuthenActivity extends TBaseActivity<IAuthenView, AuthenPresenter>
         params.put("image_base64", fmBase64);
         params.put("legality", "1");
 
-
         OkGo.<String>post(Constants.FACE_PP_OCR)
                 .tag(this)
                 .params(params)
@@ -246,6 +263,16 @@ public class AuthenActivity extends TBaseActivity<IAuthenView, AuthenPresenter>
                     public void onSuccess(Response<String> response) {
 
                         L.e("身份证反面:" + response.body().toString());
+
+
+                        SFZAuthBean sfzAuthBean = GsonUtils.jsonToObj(response.body().toString(), SFZAuthBean.class);
+
+                        if (sfzAuthBean.getCards() == null || sfzAuthBean.getCards().size() == 0) {
+                            ToastUtils.showLongToast("请重新上传反面身份证");
+                            cancelLoadingDialog();
+                            return;
+                        }
+
                         fmResult = response.body().toString();
                         getCompara();
                     }
@@ -278,14 +305,35 @@ public class AuthenActivity extends TBaseActivity<IAuthenView, AuthenPresenter>
                     public void onSuccess(Response<String> response) {
 
                         L.e("对比结果:" + response.body().toString());
-                        rlResult = response.body().toString();
-                        uploadAll();
+
+                        try {
+                            FacePPComparaResultBean bean = GsonUtils.jsonToObj(response.body(), FacePPComparaResultBean.class);
+                            if (bean != null) {
+                                rlResult = response.body().toString();
+                                if (bean.getConfidence() > 70) {
+                                    uploadAll();
+                                } else {
+                                    cancelLoadingDialog();
+                                    ToastUtils.showLongToast("匹配度"+bean.getConfidence()+" 身份证正面和面部照片不匹配");
+                                }
+
+                            } else {
+                                cancelLoadingDialog();
+                                ToastUtils.showShortToast("认证失败");
+                            }
+
+
+                        } catch (Exception e) {
+                            cancelLoadingDialog();
+                            ToastUtils.showShortToast("认证失败");
+                        }
+
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         cancelLoadingDialog();
-                        ToastUtils.showShortToast("对比同一个人失败");
+                        ToastUtils.showShortToast("请求失败");
                         super.onError(response);
                     }
                 });
@@ -307,11 +355,19 @@ public class AuthenActivity extends TBaseActivity<IAuthenView, AuthenPresenter>
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+                        String result = response.body().toString();
 
-                        ToastUtils.showShortToast(response.body().toString());
-                        cancelLoadingDialog();
-                        //RxBus.postEvent(new JumpEvent(Constants.UPLOAD_AUTH_SUCCESS_REDIRECTION), JumpEvent.class);
-                        //finish();
+                        AuthResultBean authResultBean = GsonUtils.jsonToObj(result, AuthResultBean.class);
+                        if (authResultBean.getFh() == 1) {
+                            ToastUtils.showShortToast("提交成功");
+                            cancelLoadingDialog();
+
+                            RxBus.postEvent(new JumpEvent(Constants.UPLOAD_AUTH_SUCCESS_REDIRECTION), JumpEvent.class);
+                            finish();
+                        } else {
+                            cancelLoadingDialog();
+                            ToastUtils.showShortToast(authResultBean.getMsg());
+                        }
                     }
 
                     @Override
@@ -327,8 +383,8 @@ public class AuthenActivity extends TBaseActivity<IAuthenView, AuthenPresenter>
     private String getImgJson() {
         List<AuthUploadBean> beans = new ArrayList<>();
         beans.add(new AuthUploadBean("1", zmBase64, zmResult));
-        beans.add(new AuthUploadBean("2", zmBase64, fmResult));
-        beans.add(new AuthUploadBean("3", zmBase64, "人脸照片没有详细信息"));
+        beans.add(new AuthUploadBean("2", fmBase64, fmResult));
+        beans.add(new AuthUploadBean("3", rlBase64, "人脸照片没有详细信息"));
 
         return GsonUtils.listToJson(beans);
     }

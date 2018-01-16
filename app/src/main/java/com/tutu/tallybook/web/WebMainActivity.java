@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -21,17 +20,20 @@ import com.hzecool.common.utils.ImageUtils;
 import com.hzecool.common.utils.ToastUtils;
 import com.hzecool.common.utils.Utils;
 import com.hzecool.core.rxbus.RxBus;
+import com.hzecool.db.utils.utils;
 import com.hzecool.widget.materialdialog.MaterialDialog;
 import com.just.library.AgentWeb;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tutu.tallybook.R;
 import com.tutu.tallybook.web.beana.CameraEvent;
 import com.tutu.tallybook.web.beana.JumpEvent;
+import com.tutu.tallybook.web.beana.ScanQrCodeEvent;
 import com.tutu.tallybook.web.gps.LocationHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import io.github.xudaojie.qrcodelib.CaptureActivity;
 import me.shaohui.advancedluban.Luban;
 import rx.functions.Action1;
 
@@ -110,7 +112,7 @@ public class WebMainActivity extends AppCompatActivity {
                             .subscribe(aBoolean -> {
                                 if (aBoolean) {
                                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                                    file = new File(utils.getCacheDirectory(Utils.getContext(), true).getAbsolutePath()
                                             + "/img/" + System.currentTimeMillis() + ".jpg");
                                     file.getParentFile().mkdirs();
                                     Uri uri = FileProvider.getUriForFile(WebMainActivity.this, "com.hzecool.common.fileProvider", file);
@@ -124,6 +126,15 @@ public class WebMainActivity extends AppCompatActivity {
                             });
 
 
+                });
+
+        RxBus.obtainEvent(ScanQrCodeEvent.class)
+                .subscribe(new Action1<ScanQrCodeEvent>() {
+                    @Override
+                    public void call(ScanQrCodeEvent scanQrCodeEvent) {
+                        Intent i = new Intent(WebMainActivity.this, CaptureActivity.class);
+                        startActivityForResult(i, 999);
+                    }
                 });
     }
 
@@ -139,13 +150,26 @@ public class WebMainActivity extends AppCompatActivity {
                 ToastUtils.showShortToast("照片类型为空");
             }
         }
+
+
+        if (resultCode == RESULT_OK
+                && requestCode == 999
+                && data != null) {
+            String result = data.getStringExtra("result");
+            if (result.startsWith("http")){
+                RxBus.postEvent(new JumpEvent(result), JumpEvent.class);
+            }else {
+                ToastUtils.showShortToast("二维码不是网址");
+            }
+
+        }
     }
 
 
     public void yasuo(File filePa) {
         Luban.get(this)
                 .load(filePa)
-                .setMaxSize(1000)
+                .setMaxSize(2000)
                 .setMaxHeight(1920)
                 .setMaxWidth(1080)
                 .putGear(Luban.CUSTOM_GEAR)
@@ -168,7 +192,6 @@ public class WebMainActivity extends AppCompatActivity {
         bm.compress(Bitmap.CompressFormat.JPEG, 80, baos);
         byte[] b = baos.toByteArray();
         String img64 = Base64.encodeToString(b, Base64.DEFAULT);
-//        L.e("img64=" + img64);
         Log.d("getBitmapBase64", "压缩后的大小=" + b.length);
         return img64;
     }

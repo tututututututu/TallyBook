@@ -1,5 +1,7 @@
 package com.hzecool.core.base;
+
 import android.app.Application;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hzecool.app.AppConstans;
 import com.hzecool.common.utils.ConvertUtils;
@@ -15,7 +17,12 @@ import com.hzecool.core.sp.FinalSPOperation;
 import com.hzecool.db.manager.DaoManager;
 import com.hzecool.widget.loadingLayout.LoadingLayout;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.squareup.leakcanary.LeakCanary;
+
+import java.util.logging.Level;
+
+import okhttp3.OkHttpClient;
 
 import static com.hzecool.app.AppConstans.LOG_DEBUG;
 
@@ -62,11 +69,24 @@ public class BaseApp extends Application {
         SPUtils.initSP("appData");
         iniFinalSP();
         //初始化OKgo
-        OkGo.getInstance().init(this);
+
+
+        initOKGo();
+
 
         //初始化路由
         initArouter();
         initLoadingLayout();
+    }
+
+    private void initOKGo() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
+        loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setColorLevel(Level.INFO);
+        builder.addInterceptor(loggingInterceptor);
+
+        OkGo.getInstance().init(this).setOkHttpClient(builder.build())   ;
     }
 
     private void initDB() {

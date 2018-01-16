@@ -37,9 +37,9 @@ public class MainActivity extends TBaseActivity<IMainView, MainPresenter>
         NavigationController navigationController = tab.custom()
                 .addItem(newItem(R.mipmap.bottom_detail_normal, R.mipmap.bottom_detail_pressed, "明细"))
                 .addItem(newItem(R.mipmap.bottom_chart_normal, R.mipmap.bottom_chart_pressed, "图表"))
-                .addItem(newRoundItem(R.mipmap.bottom_add_normal, R.mipmap.bottom_add_pressed, "记账"))
+                .addItem(newItem(R.mipmap.bottom_add_normal, R.mipmap.bottom_add_pressed, "记账"))
                 .addItem(newItem(R.mipmap.bottom_find_normal, R.mipmap.bottom_find_pressed, "发现"))
-                .addItem(newItem(R.mipmap.bottom_me_normal, R.mipmap.bottom_me_pressed, "我的"))
+                //.addItem(newItem(R.mipmap.bottom_me_normal, R.mipmap.bottom_me_pressed, "我的"))
                 .build();
 
         viewPager = findViewById(R.id.viewPager);

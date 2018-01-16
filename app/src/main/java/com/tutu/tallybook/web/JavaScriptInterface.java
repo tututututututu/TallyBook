@@ -2,6 +2,7 @@ package com.tutu.tallybook.web;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
@@ -13,8 +14,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tutu.tallybook.web.beana.CameraEvent;
+import com.tutu.tallybook.web.auth.AuthenActivity;
 import com.tutu.tallybook.web.beana.JumpEvent;
+import com.tutu.tallybook.web.beana.ScanQrCodeEvent;
 import com.tutu.tallybook.web.contact.ContactGetHelper;
 
 import java.util.HashMap;
@@ -61,9 +63,26 @@ public class JavaScriptInterface {
 
     @JavascriptInterface
     public void onGetPicReq(String type) {
-        RxBus.postEvent(new CameraEvent(type), CameraEvent.class);
+        //RxBus.postEvent(new CameraEvent(type), CameraEvent.class);
     }
 
+    @JavascriptInterface
+    public void upLoadSfsb(String userId) {
+        /**
+         * 身份认证
+         */
+        Intent intent = new Intent(context, AuthenActivity.class);
+        intent.putExtra("userId", userId);
+        context.startActivity(intent);
+    }
+
+    @JavascriptInterface
+    public void onScanClick() {
+        /**
+         * 扫一扫
+         */
+        RxBus.postEvent(new ScanQrCodeEvent(), ScanQrCodeEvent.class);
+    }
 
     private void requestPermissionLocation(final String card) {
         RxPermissions rxPermissions = new RxPermissions(context);

@@ -1,9 +1,9 @@
 package com.hzecool.core.cache;
 
-import android.os.Environment;
 import android.support.annotation.IntDef;
 
 import com.hzecool.common.utils.Utils;
+import com.hzecool.db.utils.utils;
 
 import java.io.File;
 import java.lang.annotation.Retention;
@@ -49,11 +49,7 @@ public class CacheManager {
      * @return
      */
     public static String getAppCachePath() {
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            return Utils.getContext().getExternalCacheDir().getAbsolutePath();
-        } else {
-            return Utils.getContext().getCacheDir().getAbsolutePath();
-        }
+        return utils.getCacheDirectory(Utils.getContext(), true).getAbsolutePath();
     }
 
 
@@ -88,7 +84,7 @@ public class CacheManager {
     public static void clearCommonCache() {
         deleteDir(getTyleCachePath(COMMON_CACHE_PATH));
         deleteDir(getTyleCachePath(SHARE_CACHE_PATH));
-       // com.lzy.okgo.cache.CacheManager.INSTANCE.clear();
+        // com.lzy.okgo.cache.CacheManager.INSTANCE.clear();
     }
 
     /**
