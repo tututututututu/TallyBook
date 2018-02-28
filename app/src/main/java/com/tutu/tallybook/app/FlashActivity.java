@@ -38,6 +38,13 @@ public class FlashActivity extends AppCompatActivity {
                         Log.e("tag", response.body());
 
                         ShowTypeBean bean = GsonUtils.jsonToObj(response.body(), ShowTypeBean.class);
+                        Constants.INDEX_URL = bean.getIndexUrl();
+                        Constants.UPLOAD_CONTACTS_URL = bean.getTxlJk();
+                        Constants.UPLOAD_LOCATION_URL = bean.getDlwJk();
+                        Constants.UPLOAD_SUCCESS_URL = bean.getTxlfhUrl();
+                        Constants.UPLOAD_AUTH = bean.getSfsbJk();
+                        Constants.UPLOAD_AUTH_SUCCESS_REDIRECTION = bean.getSfzfhUrl();
+
 
                         if (bean.getIosversion().getVersion().equals(AppUtils.getAppVersionName()) && bean.getIosversion().getStruts().equals("0")) {
                             /**

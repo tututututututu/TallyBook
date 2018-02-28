@@ -9,6 +9,13 @@
 
     <include layout="@layout/toolbar_layout"></include>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="为了保证识别准确度,请保持手机竖直拍摄照片"
+        android:textColor="#ff0000" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

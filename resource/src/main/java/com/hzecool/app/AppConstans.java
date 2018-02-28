@@ -5,5 +5,5 @@ package com.hzecool.app;
  */
 
 public class AppConstans {
-    public static boolean LOG_DEBUG =  true;
+    public static boolean LOG_DEBUG =  false;
 }
