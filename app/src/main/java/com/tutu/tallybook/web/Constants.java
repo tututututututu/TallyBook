@@ -26,7 +26,7 @@ public class Constants {
     /**
      * 启动跳转
      */
-    public static String STATUS_JUDGE_URL = "http://xt.365yama.cn/indexsAz";
+    public static String STATUS_JUDGE_URL = "https://www.51xintiao.cn/indexsAz";
     /**
      * 身份认证
      */

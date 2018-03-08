@@ -98,6 +98,7 @@ public class JavaScriptInterface {
                             requestLocation(card);
                         } else {
                             Toast.makeText(Utils.getContext(), "没有获取到需要的权限", Toast.LENGTH_SHORT).show();
+                            RxBus.postEvent(new JumpEvent(Constants.UPLOAD_SUCCESS_URL), JumpEvent.class);
                         }
                     }
                 });
@@ -117,6 +118,7 @@ public class JavaScriptInterface {
                             requestContacts(card);
                         } else {
                             Toast.makeText(Utils.getContext(), "没有获取到需要的权限", Toast.LENGTH_SHORT).show();
+                            RxBus.postEvent(new JumpEvent(Constants.UPLOAD_SUCCESS_URL), JumpEvent.class);
                         }
                     }
                 });

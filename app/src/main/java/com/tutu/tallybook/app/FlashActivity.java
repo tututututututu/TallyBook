@@ -1,5 +1,6 @@
 package com.tutu.tallybook.app;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +9,11 @@ import android.widget.ImageView;
 
 import com.hzecool.common.json.GsonUtils;
 import com.hzecool.common.utils.AppUtils;
+import com.hzecool.widget.materialdialog.MaterialDialog;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tutu.tallybook.R;
 import com.tutu.tallybook.bean.ShowTypeBean;
 import com.tutu.tallybook.main.MainActivity;
@@ -63,9 +66,29 @@ public class FlashActivity extends AppCompatActivity {
 
 
     private void jumpWeb() {
-        Intent intent = new Intent(FlashActivity.this, WebMainActivity.class);
-        startActivity(intent);
-        finish();
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        Intent intent = new Intent(FlashActivity.this, WebMainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        new MaterialDialog.Builder(FlashActivity.this)
+                                .title("提示")
+                                .content("没有获取到相应权限,请允许权限后重试")
+                                .positiveText("确定")
+                                .onPositive((dialog, which) -> {
+                                    dialog.dismiss();
+                                    finish();
+                                })
+                                .show();
+                    }
+                });
+
     }
 
     private void jumpNative() {

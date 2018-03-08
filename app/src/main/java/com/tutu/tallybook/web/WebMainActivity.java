@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.hzecool.common.utils.ImageUtils;
 import com.hzecool.common.utils.ToastUtils;
@@ -95,7 +94,11 @@ public class WebMainActivity extends AppCompatActivity {
                             locationHelper = new LocationHelper(getApplicationContext());
                             locationHelper.initLocation();
                         } else {
-                            Toast.makeText(Utils.getContext(), "没有获取到需要的权限", Toast.LENGTH_SHORT).show();
+                            new MaterialDialog.Builder(WebMainActivity.this)
+                                    .title("提示")
+                                    .content("没有获取到相应权限,请允许权限后重试")
+                                    .positiveText("确定")
+                                    .show();
                         }
                     }
                 });
